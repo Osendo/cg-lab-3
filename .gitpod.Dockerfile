@@ -1,4 +1,4 @@
-FROM gitpod/workspace-full
+FROM jjanzic/docker-python3-opencv
 
 # Install custom tools, runtimes, etc.
 # For example "bastet", a command-line tetris clone:
