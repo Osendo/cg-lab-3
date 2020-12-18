@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 
-RUN apt-get update \
-    && apt-get install -y \
+RUN sudo apt-get update \
+    && sudo apt-get install -y \
         build-essential \
         cmake \
         git \
@@ -17,17 +17,17 @@ RUN apt-get update \
         libtiff-dev \
         libavformat-dev \
         libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && sudo rm -rf /var/lib/apt/lists/*
 
 RUN pip install numpy
 
 WORKDIR /
 ENV OPENCV_VERSION="4.5.0"
-RUN wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip \
-&& unzip ${OPENCV_VERSION}.zip \
-&& mkdir /opencv-${OPENCV_VERSION}/cmake_binary \
-&& cd /opencv-${OPENCV_VERSION}/cmake_binary \
-&& cmake -DBUILD_TIFF=ON \
+RUN sudo wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip \
+&& sudo unzip ${OPENCV_VERSION}.zip \
+&& sudo mkdir /opencv-${OPENCV_VERSION}/cmake_binary \
+&& sudo cd /opencv-${OPENCV_VERSION}/cmake_binary \
+&& sudo cmake -DBUILD_TIFF=ON \
   -DBUILD_opencv_java=OFF \
   -DWITH_CUDA=OFF \
   -DWITH_OPENGL=ON \
@@ -44,9 +44,9 @@ RUN wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip \
   -DPYTHON_INCLUDE_DIR=$(python3.9 -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
   -DPYTHON_PACKAGES_PATH=$(python3.9 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   .. \
-&& make install \
-&& rm /${OPENCV_VERSION}.zip \
-&& rm -r /opencv-${OPENCV_VERSION}
+&& sudo make install \
+&& sudo rm /${OPENCV_VERSION}.zip \
+&& sudo rm -r /opencv-${OPENCV_VERSION}
 RUN ln -s \
   /usr/local/python/cv2/python-3.9/cv2.cpython-37m-x86_64-linux-gnu.so \
   /usr/local/lib/python3.9/site-packages/cv2.so
